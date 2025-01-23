@@ -19,14 +19,14 @@ const TodoList = () => {
     const [newTodo, setNewTodo] = useState("");
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // <2>
+        e.preventDefault();
 
         if (!newTodo.trim()) {
-            return; // <3>
+            return;
         }
 
-        setTodos([{ id: crypto.randomUUID(), text: newTodo }, ...todos]); // <4>
-        setNewTodo(""); // <5>
+        setTodos([{ id: crypto.randomUUID(), text: newTodo }, ...todos]);
+        setNewTodo("");
     };
 
     const handleInputChange = (e) => {
@@ -35,7 +35,6 @@ const TodoList = () => {
 
     return (
         <div>
-            {/* <1> */}
             <form onSubmit={handleSubmit}>
                 <input type="text" value={newTodo} onChange={handleInputChange} placeholder="Enter a new todo" />
                 <button type="submit">Add Todo</button>
