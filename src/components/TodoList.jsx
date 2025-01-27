@@ -40,9 +40,8 @@ const TodoList = () => {
             if (todo.id === id) {
                 // 3. id가 일치하면 completed 상태를 반전시킨 새로운 항목을 반환한다.
                 return {
-                    id: todo.id, // 기존 id 유지
-                    text: todo.text, // 기존 text 유지
-                    completed: !todo.completed, // completed 상태 반전
+                    ...todo,
+                    completed: !todo.completed,
                 };
             } else {
                 // 4. id가 일치하지 않으면 기존 항목을 그대로 반환한다.
