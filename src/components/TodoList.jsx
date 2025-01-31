@@ -53,6 +53,22 @@ const TodoList = () => {
         setTodos(updatedTodos);
     };
 
+    // 1. Todo 항목을 삭제하는 함수를 정의한다.
+    const handleDelete = (id) => {
+        // 2. 선택된 항목을 제외한 새로운 배열을 생성한다.
+        const deleteTodos = todos.filter((todo) => {
+            // 조건을 명확히 이해할 수 있도록 if문을 사용한다.
+            if (todo.id === id) {
+                return false; // 만약 내가 찾는 아이디가 맞다면, false 값을 줘서 삭제한다.
+            }
+
+            return true; // 만약 내가 찾는 아이디가 아니라면, true 값을 줘서 유지한다.
+        });
+
+        // 3. 새로운 배열로 상태를 업데이트한다.
+        setTodos(deleteTodos);
+    };
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -64,6 +80,7 @@ const TodoList = () => {
                     <li key={id}>
                         <p style={{ textDecoration: completed ? "line-through" : "none" }}>{text}</p>
                         <button onClick={() => handleToggleUpdate(id)}>{completed ? "취소하기" : "완료하기"}</button>
+                        <button onClick={() => handleDelete(id)}>삭제하기</button>
                     </li>
                 ))}
             </ul>
