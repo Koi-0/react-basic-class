@@ -1,6 +1,6 @@
 import { useState } from "react";
-import TodoItem from "./Todo/TodoItem";
-import TodoForm from "./Todo/TodoForm";
+import TodoForm from "./TodoForm";
+import TodoList from "./TodoList";
 
 const SAMPLE_TODOS = [
     { id: 1, text: "Buy milk", completed: false },
@@ -15,9 +15,8 @@ const SAMPLE_TODOS = [
     { id: 10, text: "Write code", completed: false },
 ];
 
-const TodoList = () => {
+const TodoContainer = () => {
     const [todos, setTodos] = useState(SAMPLE_TODOS);
-
     const [newTodo, setNewTodo] = useState("");
 
     const handleSubmit = (e) => {
@@ -74,13 +73,9 @@ const TodoList = () => {
     return (
         <div>
             <TodoForm handleSubmit={handleSubmit} newTodo={newTodo} handleInputChange={handleInputChange} />
-            <ul>
-                {todos.map(({ id, text, completed }) => (
-                    <TodoItem key={id} completed={completed} text={text} handleToggleUpdate={handleToggleUpdate} handleDelete={handleDelete} id={id} />
-                ))}
-            </ul>
+            <TodoList todos={todos} handleToggleUpdate={handleToggleUpdate} handleDelete={handleDelete} />
         </div>
     );
 };
 
-export default TodoList;
+export default TodoContainer;
