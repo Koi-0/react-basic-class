@@ -17,24 +17,12 @@ const SAMPLE_TODOS = [
 
 const TodoContainer = () => {
     const [todos, setTodos] = useState(SAMPLE_TODOS);
-    const [newTodo, setNewTodo] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (!newTodo.trim()) {
-            return;
-        }
-
-        setTodos([{ id: crypto.randomUUID(), text: newTodo }, ...todos]);
-        setNewTodo(""); // input 태그의 value 제거
+    const addTodos = (text) => {
+        setTodos([{ id: crypto.randomUUID(), text }, ...todos]);
     };
 
-    const handleInputChange = (e) => {
-        setNewTodo(e.target.value);
-    };
-
-    const handleToggleUpdate = (id) => {
+    const toggleTodoCompleted = (id) => {
         // 1. todos 배열의 각 항목을 순회하고, 수정된 항목을 반환하여 새로운 배열을 만든다.
         const updatedTodos = todos.map((todo) => {
             // 2. 현재 항목의 id가 수정하려는 id와 일치하는지 확인한다.
@@ -55,7 +43,7 @@ const TodoContainer = () => {
     };
 
     // 1. Todo 항목을 삭제하는 함수를 정의한다.
-    const handleDelete = (id) => {
+    const deleteTodo = (id) => {
         // 2. 선택된 항목을 제외한 새로운 배열을 생성한다.
         const deleteTodos = todos.filter((todo) => {
             // 조건을 명확히 이해할 수 있도록 if문을 사용한다.
@@ -72,8 +60,8 @@ const TodoContainer = () => {
 
     return (
         <div>
-            <TodoForm handleSubmit={handleSubmit} newTodo={newTodo} handleInputChange={handleInputChange} />
-            <TodoList todos={todos} handleToggleUpdate={handleToggleUpdate} handleDelete={handleDelete} />
+            <TodoForm addTodos={addTodos} />
+            <TodoList todos={todos} toggleTodoCompleted={toggleTodoCompleted} deleteTodo={deleteTodo} />
         </div>
     );
 };
