@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TodoItem from "./Todo/TodoItem";
+import TodoForm from "./Todo/TodoForm";
 
 const SAMPLE_TODOS = [
     { id: 1, text: "Buy milk", completed: false },
@@ -72,10 +73,7 @@ const TodoList = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={newTodo} onChange={handleInputChange} placeholder="Enter a new todo" />
-                <button type="submit">Add Todo</button>
-            </form>
+            <TodoForm handleSubmit={handleSubmit} newTodo={newTodo} handleInputChange={handleInputChange} />
             <ul>
                 {todos.map(({ id, text, completed }) => (
                     <TodoItem key={id} completed={completed} text={text} handleToggleUpdate={handleToggleUpdate} handleDelete={handleDelete} id={id} />
