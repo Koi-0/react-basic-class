@@ -1,16 +1,18 @@
 import { Link, useParams } from "react-router";
-import { SAMPLE_TODOS } from "../constants/sample-todos";
 import TodoItem, { ActionButton } from "../components/Todo/TodoItem";
 import styled from "styled-components";
+import { useContext } from "react";
+import { TodoContext } from "../context/TodoContext";
 
 const TodoDetailPage = () => {
+    const { todos } = useContext(TodoContext);
     const { id } = useParams();
 
-    const targetTodoItem = SAMPLE_TODOS.find((todo) => todo.id === id);
+    const targetTodoItem = todos.find((todo) => todo.id === id);
 
     return (
         <DetailPageWrapper>
-            <TodoItem id={targetTodoItem.id} text={targetTodoItem.text} completed={targetTodoItem.completed} />
+            {targetTodoItem ? <TodoItem id={targetTodoItem.id} text={targetTodoItem.text} completed={targetTodoItem.completed} /> : <p>해당하는 데이터를 찾을 수 없습니다.</p>}
 
             <Link to="/">
                 <BackButton $bgColor="#242424">돌아가기</BackButton>
