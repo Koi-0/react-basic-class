@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ActionButton } from "./TodoItem";
 import { useContext } from "react";
@@ -8,6 +8,8 @@ const TodoForm = () => {
     const { addTodos } = useContext(TodoContext);
 
     const [todoText, setTodoText] = useState("");
+
+    const inputRef = useRef(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,9 +27,13 @@ const TodoForm = () => {
         setTodoText(e.target.value);
     };
 
+    useEffect(() => {
+        inputRef.current.focus();
+    }, []);
+
     return (
         <TodoFormWrapper onSubmit={handleSubmit}>
-            <TodoFormInput type="text" value={todoText} onChange={handleInputChange} placeholder="Enter a new todo" />
+            <TodoFormInput type="text" value={todoText} onChange={handleInputChange} placeholder="Enter a new todo" ref={inputRef} />
             <SubmitButton type="submit" $bgColor="#582be6">
                 Add Todo
             </SubmitButton>
