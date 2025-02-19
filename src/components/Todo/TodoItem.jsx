@@ -56,11 +56,13 @@ export const ActionButton = styled.button`
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
+    word-break: keep-all;
+    text-align: center;
     cursor: pointer;
+
     &:hover {
         opacity: 0.8;
     }
-    word-break: keep-all;
 `;
 
 export default TodoItem;
