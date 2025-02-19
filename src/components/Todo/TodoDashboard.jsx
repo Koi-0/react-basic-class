@@ -5,14 +5,14 @@ import { TodoContext } from "../../context/TodoContext";
 import { Link, useSearchParams } from "react-router";
 
 const TodoDashboard = () => {
-    const { todos } = useContext(TodoContext);
+    const { getFilteredTodos } = useContext(TodoContext);
     const [searchParams] = useSearchParams();
 
-    const all = todos.length;
-    const completed = todos.filter((todo) => todo.completed).length;
-    const pending = all - completed;
-
     const seletedFilter = searchParams.get("filter");
+
+    const all = getFilteredTodos().length;
+    const completed = getFilteredTodos("completed").length;
+    const pending = all - completed;
 
     return (
         <TodoDashboardSection>

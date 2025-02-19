@@ -45,7 +45,19 @@ const TodoProvider = ({ children }) => {
         setTodos(deleteTodos);
     };
 
-    return <TodoContext.Provider value={{ todos, addTodos, toggleTodoCompleted, deleteTodo }}>{children}</TodoContext.Provider>;
+    const getFilteredTodos = (selectedFilter) => {
+        if (selectedFilter === "completed") {
+            return todos.filter((todo) => todo.completed);
+        }
+
+        if (selectedFilter === "pending") {
+            return todos.filter((todo) => !todo.completed);
+        }
+
+        return todos;
+    };
+
+    return <TodoContext.Provider value={{ todos, addTodos, toggleTodoCompleted, deleteTodo, getFilteredTodos }}>{children}</TodoContext.Provider>;
 };
 
 export default TodoProvider;
