@@ -2,20 +2,24 @@ import { FileCheck, LaptopMinimal, Video } from "lucide-react";
 import { useContext } from "react";
 import styled from "styled-components";
 import { TodoContext } from "../../context/TodoContext";
+import { Link, useSearchParams } from "react-router";
 
 const TodoDashboard = () => {
     const { todos } = useContext(TodoContext);
+    const [searchParams] = useSearchParams();
 
     const all = todos.length;
     const completed = todos.filter((todo) => todo.completed).length;
     const pending = all - completed;
+
+    const seletedFilter = searchParams.get("filter");
 
     return (
         <TodoDashboardSection>
             <TodoDashboardHeader>Quick Access</TodoDashboardHeader>
             <TodoDashboardCardList>
                 <TodoDashboardWrapper $flex={2}>
-                    <TodoDashboardCard>
+                    <TodoDashboardCard to="/" $seleted={!seletedFilter}>
                         <div>
                             <FileCheck />
                         </div>
@@ -25,7 +29,7 @@ const TodoDashboard = () => {
                     </TodoDashboardCard>
                 </TodoDashboardWrapper>
                 <TodoDashboardWrapper>
-                    <TodoDashboardCard $backgroundColor="#582be6">
+                    <TodoDashboardCard to="?filter=completed" $bgColor="#582be6" $seleted={seletedFilter === "completed"}>
                         <div>
                             <LaptopMinimal />
                         </div>
@@ -35,7 +39,7 @@ const TodoDashboard = () => {
                     </TodoDashboardCard>
                 </TodoDashboardWrapper>
                 <TodoDashboardWrapper>
-                    <TodoDashboardCard $backgroundColor="#242424">
+                    <TodoDashboardCard to="?filter=pending" $bgColor="#242424" $seleted={seletedFilter === "pending"}>
                         <div>
                             <Video />
                         </div>
@@ -71,16 +75,17 @@ const TodoDashboardWrapper = styled.li`
     flex: ${({ $flex = 1 }) => $flex};
 `;
 
-const TodoDashboardCard = styled.button`
+const TodoDashboardCard = styled(Link)`
     width: 100%;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     height: 184px;
-    background-color: ${({ $backgroundColor = "#e6582b" }) => $backgroundColor};
+    background-color: ${({ $bgColor = "#e6582b" }) => $bgColor};
     color: white;
     padding: 1.25rem;
     border-radius: 1rem;
+    text-decoration: ${({ $seleted }) => ($seleted ? "underline" : "none")};
     cursor: pointer;
 `;
 
