@@ -1,16 +1,6 @@
 {
   "todos": [
     {
-      "id": "3",
-      "text": "Go for a run",
-      "completed": false
-    },
-    {
-      "id": "4",
-      "text": "Finish homework",
-      "completed": false
-    },
-    {
       "id": "5",
       "text": "Call mom",
       "completed": false

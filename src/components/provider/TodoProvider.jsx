@@ -7,7 +7,14 @@ const TodoProvider = ({ children }) => {
 
     const getTodos = async () => {
         const { data } = await todoClient.get("/");
+
         setTodos(data);
+    };
+
+    const getTodoItem = async (id) => {
+        const { data } = await todoClient.get(`${id}`);
+
+        return data;
     };
 
     const addTodos = async (text) => {
@@ -55,7 +62,20 @@ const TodoProvider = ({ children }) => {
         getTodos();
     }, []);
 
-    return <TodoContext.Provider value={{ todos, addTodos, toggleTodoCompleted, deleteTodo, getFilteredTodos }}>{children}</TodoContext.Provider>;
+    return (
+        <TodoContext.Provider
+            value={{
+                todos,
+                getTodoItem,
+                addTodos,
+                toggleTodoCompleted,
+                deleteTodo,
+                getFilteredTodos,
+            }}
+        >
+            {children}
+        </TodoContext.Provider>
+    );
 };
 
 export default TodoProvider;
