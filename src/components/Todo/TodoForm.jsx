@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ActionButton } from "./TodoItem";
-import { useContext } from "react";
-import { TodoContext } from "../../context/TodoContext";
+import { useMutation } from "@tanstack/react-query";
+import { addTodos } from "../../api/todo-api";
 
 const TodoForm = () => {
-    const { addTodos } = useContext(TodoContext);
+    const { mutate: addTodoMutate } = useMutation({
+        mutationFn: addTodos,
+    });
 
     const [todoText, setTodoText] = useState("");
 
@@ -18,9 +20,9 @@ const TodoForm = () => {
             return;
         }
 
-        addTodos(todoText);
+        addTodoMutate(todoText);
 
-        setTodoText(""); // input 태그의 value 제거
+        setTodoText("");
     };
 
     const handleInputChange = (e) => {
@@ -33,7 +35,13 @@ const TodoForm = () => {
 
     return (
         <TodoFormWrapper onSubmit={handleSubmit}>
-            <TodoFormInput type="text" value={todoText} onChange={handleInputChange} placeholder="Enter a new todo" ref={inputRef} />
+            <TodoFormInput
+                type="text"
+                value={todoText}
+                onChange={handleInputChange}
+                placeholder="Enter a new todo"
+                ref={inputRef}
+            />
             <SubmitButton type="submit" $bgColor="#582be6">
                 Add Todo
             </SubmitButton>

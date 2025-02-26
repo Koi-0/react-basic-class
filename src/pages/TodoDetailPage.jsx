@@ -1,31 +1,36 @@
 import { Link, useParams } from "react-router";
-import TodoItem, { ActionButton } from "../components/Todo/TodoItem";
+import TodoItem, { ActionButton } from "../components/todo/TodoItem";
 import styled from "styled-components";
-import { useContext, useEffect, useState } from "react";
-import { TodoContext } from "../context/TodoContext";
+import { useQuery } from "@tanstack/react-query";
+import { getTodoItem } from "../api/todo-api";
 
 const TodoDetailPage = () => {
-    const [targetTodoItem, setTargetTodoItem] = useState(null);
-    const { getTodoItem } = useContext(TodoContext);
     const { id } = useParams();
 
-    useEffect(() => {
-        const fetchTodoItem = async () => {
-            const targetTodoItem = await getTodoItem(id);
+    const {
+        data: todoItem,
+        isLoading,
+        error,
+    } = useQuery({
+        queryKey: ["todos", id],
+        queryFn: getTodoItem,
+    });
 
-            setTargetTodoItem(targetTodoItem);
-        };
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
-        fetchTodoItem();
-    }, [getTodoItem, id]);
+    if (error) {
+        return <div>Error fetching todos - {error}</div>;
+    }
 
     return (
         <DetailPageWrapper>
-            {targetTodoItem ? (
+            {todoItem ? (
                 <TodoItem
-                    id={targetTodoItem.id}
-                    text={targetTodoItem.text}
-                    completed={targetTodoItem.completed}
+                    id={todoItem.id}
+                    text={todoItem.text}
+                    completed={todoItem.completed}
                 />
             ) : (
                 <p>해당하는 데이터를 찾을 수 없습니다.</p>
