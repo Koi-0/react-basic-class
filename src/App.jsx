@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import RootLayout from "./components/Latout/RootLayout";
+import RootLayout from "./components/layout/RootLayout";
 import HomePage from "./pages/HomePage";
 import TodoDetailPage from "./pages/TodoDetailPage";
 import QueryProvider from "./components/provider/QueryProvider";
