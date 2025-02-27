@@ -1,29 +1,12 @@
 import styled from "styled-components";
 import TodoItem from "./TodoItem";
-import { useQuery } from "@tanstack/react-query";
-import { getTodos } from "../../api/todo-api";
-import { useSearchParams } from "react-router";
+import { useTodoQuery } from "../../hooks/useTodoQuery";
+import { useFilterParams } from "../../hooks/useFilterParams";
 
 const TodoList = () => {
-    const [searchParams] = useSearchParams();
-    const selectedFilter = searchParams.get("filter");
+    const selectedFilter = useFilterParams();
 
-    const {
-        data: todos,
-        isLoading,
-        error,
-    } = useQuery({
-        queryKey: ["todos", selectedFilter],
-        queryFn: () => getTodos(selectedFilter),
-    });
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error fetching todos - {error}</div>;
-    }
+    const { data: todos } = useTodoQuery(selectedFilter);
 
     return (
         <TodoListSection>

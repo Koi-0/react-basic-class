@@ -1,54 +1,22 @@
 import { FileCheck, LaptopMinimal, Video } from "lucide-react";
 import styled from "styled-components";
-import { Link, useSearchParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
-import { getTodos } from "../../api/todo-api";
+import { Link } from "react-router";
+import { useFilterParams } from "../../hooks/useFilterParams";
+import { useTodoQuery } from "../../hooks/useTodoQuery";
 
 const TodoDashboard = () => {
-    const [searchParams] = useSearchParams();
-    const seletedFilter = searchParams.get("filter");
+    const selectedFilter = useFilterParams();
 
-    const {
-        data: all,
-        // isLoading,
-        // error,
-    } = useQuery({
-        queryKey: ["todos"],
-        queryFn: () => getTodos(),
-    });
-
-    const {
-        data: completed,
-        // isLoading,
-        // error,
-    } = useQuery({
-        queryKey: ["todos", "completed"],
-        queryFn: () => getTodos("completed"),
-    });
-
-    const {
-        data: pending,
-        // isLoading,
-        // error,
-    } = useQuery({
-        queryKey: ["todos", "pending"],
-        queryFn: () => getTodos("pending"),
-    });
-
-    // if (isLoading) {
-    //     return <div>Loading...</div>;
-    // }
-
-    // if (error) {
-    //     return <div>Error fetching todos - {error}</div>;
-    // }
+    const { data: all } = useTodoQuery();
+    const { data: completed } = useTodoQuery("completed");
+    const { data: pending } = useTodoQuery("pending");
 
     return (
         <TodoDashboardSection>
             <TodoDashboardHeader>Quick Access</TodoDashboardHeader>
             <TodoDashboardCardList>
                 <TodoDashboardWrapper $flex={2}>
-                    <TodoDashboardCard to="/" $seleted={!seletedFilter}>
+                    <TodoDashboardCard to="/" $seleted={!selectedFilter}>
                         <div>
                             <FileCheck />
                         </div>
@@ -61,7 +29,7 @@ const TodoDashboard = () => {
                     <TodoDashboardCard
                         to="?filter=completed"
                         $bgColor="#582be6"
-                        $seleted={seletedFilter === "completed"}
+                        $seleted={selectedFilter === "completed"}
                     >
                         <div>
                             <LaptopMinimal />
@@ -76,7 +44,7 @@ const TodoDashboard = () => {
                     <TodoDashboardCard
                         to="?filter=pending"
                         $bgColor="#242424"
-                        $seleted={seletedFilter === "pending"}
+                        $seleted={selectedFilter === "pending"}
                     >
                         <div>
                             <Video />
