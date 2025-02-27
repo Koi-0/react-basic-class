@@ -3,17 +3,12 @@
     {
       "id": "5",
       "text": "Call mom",
-      "completed": true
+      "completed": false
     },
     {
       "id": "6",
       "text": "Buy groceries",
       "completed": true
-    },
-    {
-      "id": "8",
-      "text": "Read a book",
-      "completed": false
     },
     {
       "id": "9",
@@ -23,7 +18,7 @@
     {
       "id": "10",
       "text": "Write code",
-      "completed": false
+      "completed": true
     },
     {
       "id": "9cde",
