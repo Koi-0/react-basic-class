@@ -12,7 +12,7 @@ const TodoDetailPage = () => {
     error,
   } = useQuery({
     queryKey: ["todos", id],
-    queryFn: getTodoItem,
+    queryFn: () => getTodoItem(id),
   });
 
   if (isLoading) {
