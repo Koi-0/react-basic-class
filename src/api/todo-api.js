@@ -1,50 +1,50 @@
 import axios from "axios";
 
 export const todoClient = axios.create({
-    baseURL: "http://localhost:3000/todos",
+  baseURL: "http://localhost:3000/todos",
 });
 
 export const getTodos = async (filter) => {
-    const searchParams = new URLSearchParams();
+  const searchParams = new URLSearchParams();
 
-    if (filter === "completed") {
-        searchParams.append("completed", true);
-    }
+  if (filter === "completed") {
+    searchParams.append("completed", true);
+  }
 
-    if (filter === "pending") {
-        searchParams.append("completed", false);
-    }
+  if (filter === "pending") {
+    searchParams.append("completed", false);
+  }
 
-    const { data } = await todoClient.get(`?${searchParams.toString()}`);
+  const { data } = await todoClient.get(`?${searchParams.toString()}`);
 
-    return data;
+  return data;
 };
 
 export const getTodoItem = async (id) => {
-    const { data } = await todoClient.get(`${id}`);
+  const { data } = await todoClient.get(`${id}`);
 
-    return data;
+  return data;
 };
 
 export const addTodos = async (text) => {
-    const { data } = await todoClient.post("/", {
-        text,
-        completed: false,
-    });
+  const { data } = await todoClient.post("/", {
+    text,
+    completed: false,
+  });
 
-    return data;
+  return data;
 };
 
 export const toggleTodoCompleted = async (id, currentCompleted) => {
-    const { data } = await todoClient.patch(`/${id}`, {
-        completed: !currentCompleted,
-    });
+  const { data } = await todoClient.patch(`/${id}`, {
+    completed: !currentCompleted,
+  });
 
-    return data;
+  return data;
 };
 
 export const deleteTodo = async (id) => {
-    const { data } = await todoClient.delete(`/${id}`);
+  const { data } = await todoClient.delete(`/${id}`);
 
-    return data;
+  return data;
 };

@@ -1,77 +1,51 @@
 import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { ActionButton } from "./TodoItem";
 import { useAddTodoMutation } from "../../hooks/useTodoQuery";
 
 const TodoForm = () => {
-    const { mutate: addTodoMutate } = useAddTodoMutation();
+  const { mutate: addTodoMutate } = useAddTodoMutation();
 
-    const [todoText, setTodoText] = useState("");
+  const [todoText, setTodoText] = useState("");
 
-    const inputRef = useRef(null);
+  const inputRef = useRef(null);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-        if (!todoText.trim()) {
-            return;
-        }
+    if (!todoText.trim()) {
+      return;
+    }
 
-        addTodoMutate(todoText);
+    addTodoMutate(todoText);
 
-        setTodoText("");
-    };
+    setTodoText("");
+  };
 
-    const handleInputChange = (e) => {
-        setTodoText(e.target.value);
-    };
+  const handleInputChange = (e) => {
+    setTodoText(e.target.value);
+  };
 
-    useEffect(() => {
-        inputRef.current.focus();
-    }, []);
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
-    return (
-        <TodoFormWrapper onSubmit={handleSubmit}>
-            <TodoFormInput
-                type="text"
-                value={todoText}
-                onChange={handleInputChange}
-                placeholder="Enter a new todo"
-                ref={inputRef}
-            />
-            <SubmitButton type="submit" $bgColor="#582be6">
-                Add Todo
-            </SubmitButton>
-        </TodoFormWrapper>
-    );
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-row flex-wrap gap-4">
+      <input
+        type="text"
+        value={todoText}
+        onChange={handleInputChange}
+        placeholder="Enter a new todo"
+        ref={inputRef}
+        className="flex-[8] rounded-lg border border-gray-300 bg-white p-2 text-base placeholder-gray-400 focus:border-[#582be6] focus:outline-none"
+      />
+      <button
+        type="submit"
+        className="hover:bg[#4422b5] flex-1 rounded-lg bg-[#582be6] px-4 py-2 text-center text-white transition-colors"
+      >
+        Add Todo
+      </button>
+    </form>
+  );
 };
-
-const TodoFormWrapper = styled.form`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1rem;
-`;
-
-const TodoFormInput = styled.input`
-    flex: 8;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    background-color: white;
-    &::placeholder {
-        color: #aaa;
-    }
-    &:focus {
-        border-color: #582be6;
-        outline: none;
-    }
-`;
-
-const SubmitButton = styled(ActionButton)`
-    flex: 1;
-    text-align: center;
-`;
 
 export default TodoForm;

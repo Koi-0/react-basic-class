@@ -1,7 +1,7 @@
 import TodoContainer from "../components/Todo/TodoContainer";
 
 const HomePage = () => {
-    return <TodoContainer />;
+  return <TodoContainer />;
 };
 
 export default HomePage;
