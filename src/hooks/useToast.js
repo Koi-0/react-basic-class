@@ -1,25 +1,31 @@
 import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 
-export const useToast = create((set) => ({
-  toasts: [],
-  addToast: (message) => {
-    set((prevState) => {
-      const toastId = crypto.randomUUID();
+export const useToast = create(
+  immer((set) => ({
+    toasts: [],
 
-      return {
-        toast: [
-          ...prevState.toasts,
-          {
-            id: toastId,
-            message,
-          },
-        ],
-      };
-    });
-  },
-  removeToast: (toastId) => {
-    set((prevState) => ({
-      toast: prevState.toasts.filter((prevToast) => prevToast.id !== toastId),
-    }));
-  },
-}));
+    addToast: (message) => {
+      set((prevState) => {
+        const id = crypto.randomUUID();
+
+        prevState.toasts.push({
+          id,
+          message,
+        });
+      });
+    },
+
+    removeToast: (toastId) => {
+      set((prevState) => {
+        const targetIndex = prevState.toasts.findIndex(
+          (prevToast) => prevToast.id === toastId,
+        );
+
+        if (targetIndex !== -1) {
+          prevState.toasts.splice(targetIndex, 1);
+        }
+      });
+    },
+  })),
+);
