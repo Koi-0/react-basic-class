@@ -1,12 +1,17 @@
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useToast } from "../hooks/useToast";
 
 const Toaster = () => {
   const { toasts } = useToast();
+  const [parent] = useAutoAnimate();
 
   return (
-    <ul className="fixed left-1/2 top-4 z-40 -translate-x-1/2 space-y-2">
+    <ul ref={parent} className="fixed left-4 top-4 z-40 min-w-52 space-y-2">
       {toasts.map((toast) => (
-        <li key={toast.id} className="rounded-md bg-white px-4 py-2 shadow">
+        <li
+          key={toast.id}
+          className="w-full rounded-md bg-white px-4 py-2 shadow"
+        >
           🤚🏻 {toast.message}
         </li>
       ))}
