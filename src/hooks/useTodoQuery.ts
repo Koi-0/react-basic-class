@@ -3,11 +3,12 @@ import {
   addTodos,
   deleteTodo,
   getTodos,
+  TodoFilter,
   toggleTodoCompleted,
 } from "../api/todo-api";
 import { useToast } from "./useToast";
 
-export const useTodoQuery = (filter) => {
+export const useTodoQuery = (filter?: TodoFilter) => {
   return useQuery({
     queryKey: ["todos", filter],
     queryFn: () => getTodos(filter),
@@ -26,7 +27,7 @@ export const useAddTodoMutation = () => {
     },
 
     onSettled: () => {
-      return queryClient.invalidateQueries(["todos"]);
+      return queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
   });
 };
@@ -36,14 +37,15 @@ export const useToggleTodoMutation = () => {
   const { addToast } = useToast();
 
   return useMutation({
-    mutationFn: ({ id, completed }) => toggleTodoCompleted(id, completed),
+    mutationFn: ({ id, completed }: { id: string; completed: boolean }) =>
+      toggleTodoCompleted(id, completed),
 
     onSuccess: () => {
       addToast("Todo의 상태가 변경되었습니다.");
     },
 
     onSettled: () => {
-      return queryClient.invalidateQueries(["todos"]);
+      return queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
   });
 };
@@ -60,7 +62,7 @@ export const useDeleteTodoMutation = () => {
     },
 
     onSettled: () => {
-      return queryClient.invalidateQueries(["todos"]);
+      return queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
   });
 };

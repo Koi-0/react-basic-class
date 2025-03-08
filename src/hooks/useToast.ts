@@ -1,36 +1,54 @@
 import { create } from "zustand";
+import { combine } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
+interface Toast {
+  id: string;
+  message: string;
+}
+
+interface InitailState {
+  toasts: Toast[];
+}
+
+const initailState: InitailState = {
+  toasts: [],
+};
+
 export const useToast = create(
-  immer((set, get) => ({
-    toasts: [],
+  immer(
+    combine(initailState, (set) => {
+      const addToast = (message: Toast["message"]) => {
+        set((prevState) => {
+          const id = crypto.randomUUID();
 
-    addToast: (message) => {
-      set((prevState) => {
-        const id = crypto.randomUUID();
-        const { removeToast } = get();
+          prevState.toasts.push({
+            id,
+            message,
+          });
 
-        prevState.toasts.push({
-          id,
-          message,
+          setTimeout(() => {
+            removeToast(id);
+          }, 3000);
         });
+      };
 
-        setTimeout(() => {
-          removeToast(id);
-        }, 3000);
-      });
-    },
+      const removeToast = (toastId: Toast["id"]) => {
+        set((prevState) => {
+          const targetIndex = prevState.toasts.findIndex(
+            (prevToast: Toast) => prevToast.id === toastId,
+          );
 
-    removeToast: (toastId) => {
-      set((prevState) => {
-        const targetIndex = prevState.toasts.findIndex(
-          (prevToast) => prevToast.id === toastId,
-        );
+          if (targetIndex !== -1) {
+            prevState.toasts.splice(targetIndex, 1);
+          }
+        });
+      };
 
-        if (targetIndex !== -1) {
-          prevState.toasts.splice(targetIndex, 1);
-        }
-      });
-    },
-  })),
+      return {
+        addToast,
+        removeToast,
+      };
+    }),
+  ),
 );

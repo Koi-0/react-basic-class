@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router";
 import { getTodoItem } from "../api/todo-api";
-import TodoItem from "../components/Todo/TodoItem";
+import TodoItem from "../components/todo/TodoItem";
 
 const TodoDetailPage = () => {
   const { id } = useParams();
@@ -20,7 +20,7 @@ const TodoDetailPage = () => {
   }
 
   if (error) {
-    return <div>Error fetching todos - {error}</div>;
+    return <div>Error fetching todos - {error.message}</div>;
   }
 
   return (

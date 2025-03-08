@@ -7,30 +7,30 @@ import { useEffect } from "react";
 import { useThemeStore } from "./hooks/useThemeStore";
 
 const App = () => {
-    const { theme } = useThemeStore();
+  const { theme } = useThemeStore();
 
-    useEffect(() => {
-        const root = document.documentElement;
+  useEffect(() => {
+    const root = document.documentElement;
 
-        // 현재 테마 초기화
-        root.classList.remove("dark", "light");
+    // 현재 테마 초기화
+    root.classList.remove("dark", "light");
 
-        // 테마 설정
-        root.classList.add(theme);
-    }, [theme]);
+    // 테마 설정
+    root.classList.add(theme);
+  }, [theme]);
 
-    return (
-        <BrowserRouter>
-            <QueryProvider>
-                <Routes>
-                    <Route path='/' element={<RootLayout />}>
-                        <Route index element={<HomePage />} />
-                        <Route path='todos/:id' element={<TodoDetailPage />} />
-                    </Route>
-                </Routes>
-            </QueryProvider>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <QueryProvider>
+        <Routes>
+          <Route path="/" element={<RootLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="todos/:id" element={<TodoDetailPage />} />
+          </Route>
+        </Routes>
+      </QueryProvider>
+    </BrowserRouter>
+  );
 };
 
 export default App;
