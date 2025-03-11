@@ -42,3 +42,6 @@ next-env.d.ts
 
 # json-server
 db.json
+
+# .DS_Store
+.DS_Store
