@@ -27,6 +27,8 @@ export const createTodo = async (text: Todo["text"]) => {
 
   const data: Todo[] = await response.json();
 
+  revalidateTag("todos");
+
   return data;
 };
 
