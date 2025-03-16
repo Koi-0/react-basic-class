@@ -1,7 +1,6 @@
 "use server";
 
 import { Todo } from "@/types/todo.type";
-import { revalidateTag } from "next/cache";
 
 const BASE_URL = "http://localhost:3000/todos";
 
@@ -38,9 +37,7 @@ export const createTodo = async (text: Todo["text"]) => {
     body: JSON.stringify({ text, completed: false }),
   });
 
-  const data: Todo[] = await response.json();
-
-  revalidateTag("todos");
+  const data: Todo = await response.json();
 
   return data;
 };
@@ -50,9 +47,7 @@ export const deleteTodo = async (id: Todo["id"]) => {
     method: "DELETE",
   });
 
-  const data: Todo[] = await response.json();
-
-  revalidateTag("todos");
+  const data: Todo = await response.json();
 
   return data;
 };
@@ -69,9 +64,7 @@ export const toggleTodoCompleted = async (
     body: JSON.stringify({ completed }),
   });
 
-  const data: Todo[] = await response.json();
-
-  revalidateTag("todos");
+  const data: Todo = await response.json();
 
   return data;
 };

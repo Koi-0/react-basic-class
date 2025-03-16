@@ -15,10 +15,18 @@ interface TodoDeleteButtonProps {
 }
 
 const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
+  const handleDelete = async () => {
+    await fetch(`/api/todos/${id}`, {
+      method: "DELETE",
+    });
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={"destructive"}>삭제</Button>
+        <Button onClick={handleDelete} variant={"destructive"}>
+          삭제
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
