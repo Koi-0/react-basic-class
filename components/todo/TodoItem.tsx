@@ -1,7 +1,7 @@
 "use client";
 
-import { toggleTodoCompleted } from "@/api/todo-api";
 import { cn } from "@/lib/utils";
+import { useToggleTodoMutation } from "@/query/useTodoMutations";
 import { Todo } from "@/types/todo.type";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -12,6 +12,8 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ todo }: TodoItemProps) => {
+  const { mutate: toggleTodoCompleted } = useToggleTodoMutation();
+
   const { id, text, completed } = todo;
 
   return (
@@ -26,7 +28,7 @@ const TodoItem = ({ todo }: TodoItemProps) => {
       <div className="space-x-2">
         <Button
           onClick={() => {
-            toggleTodoCompleted(id, !completed);
+            toggleTodoCompleted({ id, completed: !completed });
           }}
           variant={"outline"}
         >
