@@ -12,6 +12,7 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
+import { Trash2 } from "lucide-react";
 
 interface TodoDeleteButtonProps {
   id: string;
@@ -23,7 +24,9 @@ const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={"destructive"}>삭제</Button>
+        <Button variant={"destructive"} size={"icon"}>
+          <Trash2 />
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
