@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen:types": "supabase gen types typescript --project-id nvxksjusnprxunhtcymv --schema public > database.types.ts"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -37,6 +38,7 @@
     "eslint-config-next": "15.2.1",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "supabase": "^2.19.7",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
